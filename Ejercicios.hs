@@ -46,3 +46,24 @@ cuantos_doc (x:xs) cargo | (x == Docente cargo) = 1 + cuantos_doc xs cargo
 primerElemento::[a] -> Maybe a
 primerElemento [] = Nothing
 primerElemento xs = Just (head xs)
+
+
+--Ejercicio 5)
+
+data Cola = VaciaC | Encolada Persona Cola
+
+atender :: Cola -> Maybe Cola
+atender VaciaC = Nothing  
+atender (Encolada persona cola) = Just cola
+
+encolar :: Persona -> Cola ->  Cola
+encolar p VaciaC = Encolada p VaciaC
+encolar p (Encolada person cola) = Encolada person (encolar p cola)
+
+busca :: Cola -> Cargo -> Maybe Persona
+busca VaciaC _ = Nothing
+busca (Encolada persona cola) cargo | persona == (Docente cargo) = Just persona
+                                    | otherwise = busca cola cargo
+
+--Ejercicio 6)
+--Ejercicio 7)
