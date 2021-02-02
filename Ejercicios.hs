@@ -66,4 +66,36 @@ busca (Encolada persona cola) cargo | persona == (Docente cargo) = Just persona
                                     | otherwise = busca cola cargo
 
 --Ejercicio 6)
+data ListaAsoc a b = Vacia | Nodo a b ( ListaAsoc a b )
+type Diccionario = ListaAsoc String String
+type Padron = ListaAsoc Int String
+
+la_long :: ListaAsoc a b -> Int
+la_long Vacia = 0
+la_long (Nodo _ _ z) = 1 + la_long z
+
+la_pares :: ListaAsoc a b -> [(a,b)]
+la_pares Vacia = []
+la_pares (Nodo x y z) = (x,y) : la_pares z
+
+la_busca :: Eq a => ListaAsoc a b -> a -> Maybe b
+la_busca Vacia _ = Nothing
+la_busca (Nodo x y z) w | (x == w) = Just y
+                        | otherwise = la_busca z w
+
+la_borrar :: Eq a => a -> ListaAsoc a b -> ListaAsoc a b
+la_borrar _ Vacia = Vacia
+la_borrar w (Nodo x y (z)) | (w==x) = la_borrar w z
+                           | otherwise = Nodo x y (la_borrar w (z)
+
 --Ejercicio 7)
+
+data Arbol a = Hoja | Rama ( Arbol a ) a ( Arbol a )
+
+a_long :: Arbol a -> Int
+a_long Hoja = 0
+a_long (Rama x _ z ) = 1 + a_long x + a_long z
+
+a_hojas :: Arbol a -> Int
+a_hojas Hoja = 1
+a_hojas (Rama x _ z ) =  a_long x + a_long z
